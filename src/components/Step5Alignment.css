@@ -1,0 +1,118 @@
+.alignment-header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.alignment-header p {
+    color: var(--text-muted);
+    margin-bottom: 1rem;
+}
+
+.alignment-area {
+    display: flex;
+    gap: 4rem;
+    width: 100%;
+    max-width: 1000px;
+}
+
+.reference-genome {
+    flex: 2;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    background: var(--panel-bg);
+    padding: 1.5rem;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.reference-genome h3,
+.fastq-pool h3 {
+    margin-top: 0;
+    color: var(--text-main);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding-bottom: 0.5rem;
+}
+
+.reference-track {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    position: relative;
+}
+
+.ref-name {
+    font-weight: bold;
+    font-size: 0.9rem;
+}
+
+.ref-seq {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 1.25rem;
+    letter-spacing: 0.1em;
+    padding: 0.5rem;
+    border: 2px dashed;
+    border-radius: 4px;
+    background: rgba(0, 0, 0, 0.3);
+    color: #fff;
+}
+
+.mapped-reads-area {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    min-height: 40px;
+    padding-left: 0.5rem;
+}
+
+.mapped-read {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 1.1rem;
+    letter-spacing: 0.1em;
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    color: #000;
+    font-weight: bold;
+    width: max-content;
+    animation: slideInFromPool 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+@keyframes slideInFromPool {
+    from {
+        opacity: 0;
+        transform: translateY(50px) scale(0.8);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+.fastq-pool {
+    flex: 1;
+    background: rgba(0, 0, 0, 0.3);
+    padding: 1.5rem;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.pool-container {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.pool-read {
+    font-family: 'Courier New', Courier, monospace;
+    background: #334155;
+    color: #cad5e2;
+    padding: 0.5rem;
+    border-radius: 4px;
+    text-align: center;
+    transition: opacity 0.3s ease;
+}
+
+.pool-read.hidden {
+    opacity: 0.1;
+}

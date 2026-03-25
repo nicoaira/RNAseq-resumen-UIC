@@ -1,0 +1,91 @@
+.app-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.app-header {
+  padding: 1rem 2rem;
+  background-color: var(--panel-bg);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.app-header h1 {
+  font-size: 1.5rem;
+  color: var(--accent);
+  margin: 0;
+}
+
+.main-content {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+}
+
+.pedagogy-panel {
+  width: 350px;
+  background-color: var(--panel-bg);
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  border-right: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 4px 0 15px rgba(0, 0, 0, 0.2);
+  z-index: 10;
+}
+
+.step-indicator {
+  font-size: 0.875rem;
+  color: var(--accent);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-weight: 700;
+}
+
+.pedagogy-panel h2 {
+  font-size: 1.75rem;
+  color: var(--text-main);
+  line-height: 1.2;
+}
+
+.pedagogy-panel p {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  color: var(--text-muted);
+  flex: 1;
+}
+
+.controls {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: auto;
+}
+
+.controls button {
+  flex: 1;
+}
+
+.visualizer-area {
+  flex: 1;
+  position: relative;
+  background: var(--bg-color);
+  background-image: radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+  background-size: 30px 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+.placeholder-visuals {
+  text-align: center;
+  opacity: 0.5;
+}
+
+.wip {
+  margin-top: 1rem;
+  font-style: italic;
+}

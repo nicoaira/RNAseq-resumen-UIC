@@ -1,0 +1,92 @@
+.sam-viewer-area {
+    width: 100%;
+    max-width: 900px;
+    background: #0f172a;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    font-family: 'Courier New', Courier, monospace;
+    overflow: hidden;
+    animation: fadeIn 0.5s ease-out;
+}
+
+.sam-header {
+    background: #1e293b;
+    padding: 1rem;
+    color: #64748b;
+    font-size: 0.85rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.sam-header div {
+    margin-bottom: 0.25rem;
+}
+
+.sam-table {
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.sam-row {
+    display: flex;
+    gap: 1rem;
+    padding: 0.5rem;
+    font-size: 0.9rem;
+    border-left: 3px solid transparent;
+    background: rgba(255, 255, 255, 0.02);
+    border-radius: 4px;
+}
+
+.sam-row:hover {
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.sam-th {
+    background: transparent;
+    color: #94a3b8;
+    font-weight: bold;
+    border-left: 3px solid transparent !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding-bottom: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.col-qname {
+    width: 120px;
+}
+
+.col-flag {
+    width: 40px;
+    color: #64748b;
+}
+
+.col-rname {
+    width: 80px;
+}
+
+.col-pos {
+    width: 40px;
+    color: #64748b;
+}
+
+.col-mapq {
+    width: 40px;
+    color: #64748b;
+}
+
+.col-cigar {
+    width: 60px;
+    color: #64748b;
+}
+
+.col-seq {
+    width: 100px;
+    font-weight: bold;
+}
+
+.col-qual {
+    flex: 1;
+    color: #475569;
+}
