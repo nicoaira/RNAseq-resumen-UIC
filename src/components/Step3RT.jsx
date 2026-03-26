@@ -1,21 +1,20 @@
 import React, { useEffect, useState } from 'react';
-import './Step2Extraction.css';
+import './Step3RT.css';
 
-const RnaStrand = ({ color, id, x, y }) => {
+const CdnaStrand = ({ color, id, x, y }) => {
     return (
         <svg
-            className="rna-strand-tube"
+            className="cdna-strand-tube"
             width="30"
             height="30"
             viewBox="0 0 100 100"
             style={{ left: `${x}%`, top: `${y}%` }}
             title={`Gene ${id}`}
         >
-            <path
-                d="M 10 50 Q 25 20, 50 50 T 90 50"
+            <line
+                x1="10" y1="50" x2="90" y2="50"
                 stroke={color}
                 strokeWidth="6"
-                fill="none"
                 strokeLinecap="round"
             />
         </svg>
@@ -30,7 +29,7 @@ const Tube = ({ title, genes, dropping }) => {
                 <div className="tube-liquid"></div>
                 <div className={`genes-container ${dropping ? 'dropping' : ''}`}>
                     {genes.map((g, i) => (
-                        <RnaStrand
+                        <CdnaStrand
                             key={i}
                             color={g.color}
                             id={g.id}
@@ -44,7 +43,7 @@ const Tube = ({ title, genes, dropping }) => {
     );
 };
 
-export default function Step2Extraction() {
+export default function Step3RT() {
     const [dropping, setDropping] = useState(false);
 
     useEffect(() => {
@@ -84,8 +83,8 @@ export default function Step2Extraction() {
     return (
         <div className="step-container">
             <div className="tubes-area">
-                <Tube title="Control RNA" genes={controlGenes} dropping={dropping} />
-                <Tube title="Treated RNA" genes={treatedGenes} dropping={dropping} />
+                <Tube title="Control cDNA" genes={controlGenes} dropping={dropping} />
+                <Tube title="Treated cDNA" genes={treatedGenes} dropping={dropping} />
             </div>
         </div>
     );

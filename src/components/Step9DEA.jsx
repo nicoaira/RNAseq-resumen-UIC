@@ -3,9 +3,9 @@ import './StepMatrix.css';
 
 export default function Step9DEA() {
     const data = [
-        { gene: 'Gene A', color: 'var(--gene-a)', log2fc: 0.86, rawLabel: 'Up-regulated' },
-        { gene: 'Gene B', color: 'var(--gene-b)', log2fc: -0.14, rawLabel: 'Unchanged' },
-        { gene: 'Gene C', color: 'var(--gene-c)', log2fc: -1.14, rawLabel: 'Down-regulated' },
+        { gene: 'Gene A', color: 'var(--gene-a)', log2fc: 1.47, rawLabel: 'Up-regulated' },
+        { gene: 'Gene B', color: 'var(--gene-b)', log2fc: -0.53, rawLabel: 'Unchanged' },
+        { gene: 'Gene C', color: 'var(--gene-c)', log2fc: -1.53, rawLabel: 'Down-regulated' },
     ];
 
     return (

@@ -1,91 +1,257 @@
 .app-container {
   display: flex;
   flex-direction: column;
-  height: 100vh;
-  overflow: hidden;
+  min-height: 100vh;
+  background-color: var(--bg-color);
+  background-image: radial-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+  background-size: 30px 30px;
 }
 
 .app-header {
-  padding: 1rem 2rem;
+  padding: 2rem;
   background-color: var(--panel-bg);
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  text-align: center;
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
 }
 
 .app-header h1 {
-  font-size: 1.5rem;
+  font-size: 2rem;
   color: var(--accent);
+  margin: 0 0 0.5rem 0;
+}
+
+.app-header p {
+  color: var(--text-muted);
+  font-size: 1.1rem;
   margin: 0;
 }
 
-.main-content {
-  display: flex;
-  flex: 1;
-  overflow: hidden;
-}
-
-.pedagogy-panel {
-  width: 350px;
-  background-color: var(--panel-bg);
-  padding: 2rem;
+.scroll-content {
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
-  border-right: 1px solid rgba(255, 255, 255, 0.1);
-  box-shadow: 4px 0 15px rgba(0, 0, 0, 0.2);
-  z-index: 10;
+  align-items: center;
+  padding: 3rem 2rem;
+  max-width: 1400px;
+  margin: 0 auto;
+  width: 100%;
 }
 
-.step-indicator {
-  font-size: 0.875rem;
-  color: var(--accent);
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  font-weight: 700;
-}
-
-.pedagogy-panel h2 {
-  font-size: 1.75rem;
-  color: var(--text-main);
-  line-height: 1.2;
-}
-
-.pedagogy-panel p {
-  font-size: 1.1rem;
-  line-height: 1.6;
-  color: var(--text-muted);
-  flex: 1;
-}
-
-.controls {
+.pipeline-step {
   display: flex;
-  justify-content: space-between;
-  gap: 1rem;
-  margin-top: auto;
+  flex-direction: column;
+  width: 100%;
 }
 
-.controls button {
-  flex: 1;
+/* ---- Step Card ---- */
+.step-content {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  background: var(--panel-bg);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
 }
 
-.visualizer-area {
+@media (min-width: 1024px) {
+  .step-content {
+    flex-direction: row;
+  }
+}
+
+.step-info {
   flex: 1;
-  position: relative;
-  background: var(--bg-color);
-  background-image: radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px);
-  background-size: 30px 30px;
+  padding: 2.5rem;
+  background: rgba(0, 0, 0, 0.2);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
   display: flex;
   flex-direction: column;
   justify-content: center;
+}
+
+@media (min-width: 1024px) {
+  .step-info {
+    max-width: 350px;
+    border-bottom: none;
+    border-right: 1px solid rgba(255, 255, 255, 0.05);
+  }
+}
+
+.step-indicator {
+  display: inline-block;
+  font-size: 0.875rem;
+  color: #fff;
+  background: var(--accent);
+  padding: 0.25rem 0.75rem;
+  border-radius: 20px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  width: fit-content;
+}
+
+.step-info h2 {
+  font-size: 1.75rem;
+  color: var(--text-main);
+  margin-top: 0;
+  margin-bottom: 1rem;
+  line-height: 1.2;
+}
+
+.step-info p {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  color: var(--text-muted);
+  margin: 0;
+}
+
+.step-visualizer {
+  flex: 3;
+  padding: 2.5rem;
+  display: flex;
+  justify-content: center;
   align-items: center;
-  overflow: hidden;
 }
 
-.placeholder-visuals {
-  text-align: center;
-  opacity: 0.5;
+/* ---- Connector between step cards ---- */
+.step-connector-row {
+  display: flex;
+  width: 100%;
 }
 
-.wip {
-  margin-top: 1rem;
-  font-style: italic;
+.spacer-info {
+  flex: 1;
+}
+
+@media (min-width: 1024px) {
+  .spacer-info {
+    max-width: 350px;
+  }
+}
+
+.connector-area {
+  flex: 3;
+  padding: 0 2.5rem;
+  /* matches step-visualizer padding */
+}
+
+/* Dual connector - uses exact same grid as the boxes */
+.connector-grid.dual-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  height: 5rem;
+}
+
+.connector-grid.single-grid {
+  display: flex;
+  justify-content: center;
+  height: 5rem;
+}
+
+.connector-col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.vline {
+  flex: 1;
+  width: 4px;
+  border-radius: 2px;
+}
+
+.vline.control-line {
+  background: linear-gradient(to bottom, var(--accent), rgba(59, 130, 246, 0.4));
+}
+
+.vline.treated-line {
+  background: linear-gradient(to bottom, var(--gene-a), rgba(239, 68, 68, 0.4));
+}
+
+.varrow {
+  color: var(--accent);
+  font-size: 1rem;
+  line-height: 1;
+  margin-top: -2px;
+}
+
+.varrow.treated-arrow {
+  color: var(--gene-a);
+}
+
+/* Merge connector */
+.connector-merge {
+  position: relative;
+  height: 5rem;
+}
+
+.connector-merge svg {
+  display: block;
+  height: 100%;
+  width: 100%;
+}
+
+.merge-arrow {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  color: var(--accent);
+  font-size: 1rem;
+}
+
+/* ---- Grid rules for dual-box components ---- */
+.simulation-area,
+.tubes-area,
+.pcr-area,
+.fastq-area {
+  display: grid !important;
+  grid-template-columns: 1fr 1fr !important;
+  gap: 2rem !important;
+  width: 100% !important;
+  max-width: none !important;
+  margin: 0 !important;
+}
+
+/* ---- Box styling ---- */
+.cell-container,
+.tube-container,
+.pcr-tube-container,
+.fastq-container {
+  background: #0f172a !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  border-radius: 16px !important;
+  padding: 2rem !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4) !important;
+  margin: 0 !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  box-sizing: border-box !important;
+}
+
+/* FastQ containers need stretch so the file block fills full width */
+.fastq-container {
+  align-items: stretch !important;
+}
+
+.cell-container h3,
+.tube-container h3,
+.pcr-tube-container h3,
+.fastq-container h3 {
+  margin-top: 0 !important;
+  margin-bottom: 1.5rem !important;
+  width: 100% !important;
+  text-align: center !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+  padding-bottom: 0.75rem !important;
 }

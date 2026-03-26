@@ -1,9 +1,9 @@
 .pcr-area {
     display: flex;
-    gap: 6rem;
+    gap: 4rem;
     justify-content: center;
-    align-items: flex-end;
-    height: 400px;
+    align-items: flex-start;
+    min-height: 350px;
 }
 
 .pcr-status {
@@ -15,10 +15,11 @@
     border: 1px solid rgba(168, 85, 247, 0.4);
     min-width: 300px;
     text-align: center;
-    animation: pulse 2s infinite;
+    margin-bottom: 2rem;
+    animation: pulse-purple 2s infinite;
 }
 
-@keyframes pulse {
+@keyframes pulse-purple {
     0% {
         opacity: 0.8;
     }
@@ -45,17 +46,36 @@
     font-size: 1.25rem;
 }
 
+.pcr-tube-row {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 1.5rem;
+}
+
 .pcr-tube {
-    width: 160px;
-    height: 220px;
+    width: 140px;
+    height: 250px;
     border: 4px solid rgba(255, 255, 255, 0.4);
     border-top: none;
-    border-radius: 0 0 20px 20px;
+    border-radius: 0 0 40px 40px;
     position: relative;
     background: linear-gradient(90deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.05) 100%);
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3), inset 0 -20px 30px rgba(0, 0, 0, 0.5);
     overflow: hidden;
 }
+
+.pcr-tube::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -10px;
+    right: -10px;
+    height: 8px;
+    background: rgba(255, 255, 255, 0.6);
+    border-radius: 4px;
+}
+
 
 .pcr-liquid {
     position: absolute;
@@ -64,8 +84,8 @@
     width: 100%;
     height: 80%;
     background: linear-gradient(0deg, rgba(168, 85, 247, 0.3) 0%, rgba(168, 85, 247, 0.1) 100%);
+    border-radius: 0 0 36px 36px;
     border-top: 2px solid rgba(168, 85, 247, 0.4);
-    transition: height 1.5s ease;
 }
 
 .pcr-genes {
@@ -76,56 +96,65 @@
     left: 0;
 }
 
-.rna-strand-pcr {
+.cdna-strand-pcr {
     position: absolute;
     transform: translate(-50%, -50%);
     filter: drop-shadow(0 0 3px currentColor);
     animation: float 4s infinite ease-in-out alternate;
+    transition: all 1s ease-in-out;
 }
 
-.pcr-legend-overlay {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background: rgba(15, 23, 42, 0.85);
-    border: 1px solid rgba(255, 255, 255, 0.2);
+@keyframes float {
+    0% {
+        transform: translate(-50%, -50%) rotate(-10deg) translateY(0);
+    }
+
+    100% {
+        transform: translate(-50%, -50%) rotate(10deg) translateY(-5px);
+    }
+}
+
+.pcr-legend-side {
+    background: rgba(15, 23, 42, 0.7);
+    border: 1px solid rgba(168, 85, 247, 0.3);
     padding: 1rem;
     border-radius: 8px;
-    width: 90%;
-    z-index: 10;
-    backdrop-filter: blur(4px);
-    animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+    min-width: 150px;
+    animation: slideIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
 }
 
-@keyframes popIn {
+@keyframes slideIn {
     from {
         opacity: 0;
-        transform: translate(-50%, -50%) scale(0.8);
+        transform: translateX(-10px);
     }
 
     to {
         opacity: 1;
-        transform: translate(-50%, -50%) scale(1);
+        transform: translateX(0);
     }
 }
 
 .pcr-legend-title {
     font-weight: bold;
     font-size: 0.9rem;
-    margin-bottom: 0.5rem;
+    color: #c084fc;
+    margin-bottom: 0.75rem;
     text-align: center;
-    color: #fff;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    padding-bottom: 0.25rem;
+    border-bottom: 1px solid rgba(168, 85, 247, 0.3);
+    padding-bottom: 0.5rem;
+}
+
+.pcr-legend-items {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
 }
 
 .pcr-legend-row {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     gap: 0.5rem;
-    font-size: 0.85rem;
-    margin: 0.25rem 0;
     color: var(--text-main);
 }
 
@@ -133,14 +162,23 @@
     width: 12px;
     height: 12px;
     border-radius: 2px;
+    margin-top: 3px;
+    flex-shrink: 0;
+}
+
+.pcr-legend-text {
+    font-size: 0.85rem;
+    line-height: 1.2;
 }
 
 .adapter-legend {
     display: flex;
     align-items: center;
+    justify-content: center;
     gap: 0.5rem;
     color: var(--text-muted);
     font-size: 0.9rem;
+    margin-top: 2rem;
 }
 
 .adapter-box {

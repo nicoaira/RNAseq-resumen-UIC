@@ -17,8 +17,8 @@ export default function Step7CountMatrix() {
                     <tbody>
                         <tr>
                             <td><span className="gene-dot" style={{ backgroundColor: 'var(--gene-a)' }}></span> Gene A</td>
-                            <td>3000</td>
-                            <td>6000</td>
+                            <td>2000</td>
+                            <td>8000</td>
                         </tr>
                         <tr>
                             <td><span className="gene-dot" style={{ backgroundColor: 'var(--gene-b)' }}></span> Gene B</td>
@@ -34,15 +34,15 @@ export default function Step7CountMatrix() {
                     <tfoot>
                         <tr className="totals-row">
                             <td>Total Sequencing Depth</td>
-                            <td>10,000</td>
-                            <td>11,000</td>
+                            <td>9,000</td>
+                            <td>13,000</td>
                         </tr>
                     </tfoot>
                 </table>
             </div>
 
             <div className="info-box">
-                Notice that the Treated sample got slightly more reads in total (11,000 vs 10,000). We must correct for this sequencing depth difference before comparing the samples!
+                Notice that the Treated sample got more reads in total (13,000 vs 9,000). We must correct for this sequencing depth difference before comparing the samples!
             </div>
         </div>
     );

@@ -45,10 +45,9 @@ const Cell = ({ title, genes, isTreated }) => {
 
 export default function Step1Simulation() {
     const controlGenes = [
-        // Gene A (Red) - 3 copies (Clustered Top Left)
+        // Gene A (Red) - 2 copies (Clustered Top Left)
         { id: 'A', color: 'var(--gene-a)', x: 25, y: 25, delay: 0.1 },
         { id: 'A', color: 'var(--gene-a)', x: 35, y: 15, delay: 0.4 },
-        { id: 'A', color: 'var(--gene-a)', x: 15, y: 40, delay: 0.7 },
 
         // Gene B (Green) - 3 copies (Clustered Top Right)
         { id: 'B', color: 'var(--gene-b)', x: 75, y: 22, delay: 0.2 },
@@ -63,13 +62,15 @@ export default function Step1Simulation() {
     ];
 
     const treatedGenes = [
-        // Gene A (Red) - 6 copies (Clustered Top Left)
+        // Gene A (Red) - 8 copies (Clustered Top Left)
         { id: 'A', color: 'var(--gene-a)', x: 15, y: 25, delay: 0.1 },
         { id: 'A', color: 'var(--gene-a)', x: 25, y: 15, delay: 0.2 },
         { id: 'A', color: 'var(--gene-a)', x: 35, y: 30, delay: 0.3 },
         { id: 'A', color: 'var(--gene-a)', x: 12, y: 40, delay: 0.4 },
         { id: 'A', color: 'var(--gene-a)', x: 28, y: 42, delay: 0.5 },
         { id: 'A', color: 'var(--gene-a)', x: 42, y: 20, delay: 0.6 },
+        { id: 'A', color: 'var(--gene-a)', x: 18, y: 18, delay: 0.65 },
+        { id: 'A', color: 'var(--gene-a)', x: 38, y: 40, delay: 0.7 },
 
         // Gene B (Green) - 3 copies (Clustered Top Right)
         { id: 'B', color: 'var(--gene-b)', x: 75, y: 22, delay: 0.7 },

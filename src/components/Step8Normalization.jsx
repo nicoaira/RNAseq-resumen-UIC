@@ -17,18 +17,18 @@ export default function Step8Normalization() {
                     <tbody>
                         <tr>
                             <td><span className="gene-dot" style={{ backgroundColor: 'var(--gene-a)' }}></span> Gene A</td>
-                            <td>300,000</td>
-                            <td>545,454 <span className="math-hint">(6k ÷ 11k)</span></td>
+                            <td>222,222 <span className="math-hint">(2k ÷ 9k)</span></td>
+                            <td>615,384 <span className="math-hint">(8k ÷ 13k)</span></td>
                         </tr>
                         <tr>
                             <td><span className="gene-dot" style={{ backgroundColor: 'var(--gene-b)' }}></span> Gene B</td>
-                            <td>300,000</td>
-                            <td>272,727 <span className="math-hint">(3k ÷ 11k)</span></td>
+                            <td>333,333 <span className="math-hint">(3k ÷ 9k)</span></td>
+                            <td>230,769 <span className="math-hint">(3k ÷ 13k)</span></td>
                         </tr>
                         <tr>
                             <td><span className="gene-dot" style={{ backgroundColor: 'var(--gene-c)' }}></span> Gene C</td>
-                            <td>400,000</td>
-                            <td>181,818 <span className="math-hint">(2k ÷ 11k)</span></td>
+                            <td>444,444 <span className="math-hint">(4k ÷ 9k)</span></td>
+                            <td>153,846 <span className="math-hint">(2k ÷ 13k)</span></td>
                         </tr>
                     </tbody>
                 </table>
