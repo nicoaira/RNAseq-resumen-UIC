@@ -16,8 +16,8 @@ export default function Step7CountMatrix({ mode }) {
                             <thead>
                                 <tr>
                                     <th rowSpan="2">Gene</th>
-                                    <th colSpan="3">Control</th>
-                                    <th colSpan="3">Treated</th>
+                                    <th colSpan="3" style={{ background: 'rgba(59, 130, 246, 0.15)' }}>Control</th>
+                                    <th colSpan="3" style={{ background: 'rgba(239, 68, 68, 0.15)' }}>Treated</th>
                                 </tr>
                                 <tr>
                                     <th>R1</th>

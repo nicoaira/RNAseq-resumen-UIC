@@ -174,3 +174,43 @@
     padding-bottom: 0.2rem !important;
     border-bottom: none;
 }
+
+/* ── Column group backgrounds ── */
+
+/* Replicates table: cols 2-4 = Control, cols 5-7 = Treated */
+.replicates-table thead tr:nth-child(2) th:nth-child(1),
+.replicates-table thead tr:nth-child(2) th:nth-child(2),
+.replicates-table thead tr:nth-child(2) th:nth-child(3),
+.replicates-table tbody td:nth-child(2),
+.replicates-table tbody td:nth-child(3),
+.replicates-table tbody td:nth-child(4),
+.replicates-table tfoot td:nth-child(2),
+.replicates-table tfoot td:nth-child(3),
+.replicates-table tfoot td:nth-child(4) {
+    background: rgba(59, 130, 246, 0.07);
+}
+
+.replicates-table thead tr:nth-child(2) th:nth-child(4),
+.replicates-table thead tr:nth-child(2) th:nth-child(5),
+.replicates-table thead tr:nth-child(2) th:nth-child(6),
+.replicates-table tbody td:nth-child(5),
+.replicates-table tbody td:nth-child(6),
+.replicates-table tbody td:nth-child(7),
+.replicates-table tfoot td:nth-child(5),
+.replicates-table tfoot td:nth-child(6),
+.replicates-table tfoot td:nth-child(7) {
+    background: rgba(239, 68, 68, 0.07);
+}
+
+/* Simplified 2-col tables: col 2 = Control, col 3 = Treated */
+.data-table:not(.replicates-table) thead th:nth-child(2),
+.data-table:not(.replicates-table) tbody td:nth-child(2),
+.data-table:not(.replicates-table) tfoot td:nth-child(2) {
+    background: rgba(59, 130, 246, 0.07);
+}
+
+.data-table:not(.replicates-table) thead th:nth-child(3),
+.data-table:not(.replicates-table) tbody td:nth-child(3),
+.data-table:not(.replicates-table) tfoot td:nth-child(3) {
+    background: rgba(239, 68, 68, 0.07);
+}
