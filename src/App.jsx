@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './App.css';
+import uicLogo from './assets/uic_logo.png';
 import Step1Simulation from './components/Step1Simulation';
 import Step2Extraction from './components/Step2Extraction';
 import Step3RT from './components/Step3RT';
@@ -157,7 +158,8 @@ function App() {
   return (
     <div className="app-container">
       <header className="app-header">
-        <h1>RNAseq Interactive Educational Pipeline</h1>
+        <img src={uicLogo} alt="UIC logo" className="header-logo" />
+        <h1>Pipeline RNAseq</h1>
 
         <div className="mode-tabs">
           <button
