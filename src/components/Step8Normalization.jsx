@@ -1,10 +1,21 @@
 import React from 'react';
 import './StepMatrix.css';
 
-export default function Step8Normalization({ mode }) {
+export default function Step8Normalization({ mode, onGoToTPM }) {
     if (mode === 'simplified') return null;
 
     const isReplicates = mode === 'replicates';
+    const cpmWarning = (
+        <div className="info-box warning step-note">
+            <strong>Warning:</strong> CPM is not used as often for expression comparisons because it corrects for sequencing depth but not for gene length.
+            We use it here as a simplification because it is easier to understand at first.
+            {onGoToTPM && (
+                <button type="button" className="step-link-button" onClick={onGoToTPM}>
+                    Go to TPM Normalization
+                </button>
+            )}
+        </div>
+    );
 
     if (isReplicates) {
         return (
@@ -110,11 +121,14 @@ export default function Step8Normalization({ mode }) {
                             </tfoot>
                         </table>
                     </div>
+
                 </div>
 
                 <div className="info-box success">
                     <strong>Corrected!</strong> By normalizing each library by its own total read count, we removed the technical depth difference. Now we can compare the groups directly! Notice the variations between replicates (the biological noise).
                 </div>
+
+                {cpmWarning}
             </div>
         );
     }
@@ -163,6 +177,8 @@ export default function Step8Normalization({ mode }) {
             <div className="info-box success">
                 <strong>Corrected!</strong> By normalizing relative to sequencing depth, we see that Gene B is actually stable (a ratio of **1**). This accounts for the technical variation in the flowcell and recovers the true **4×** increase of Gene A!
             </div>
+
+            {cpmWarning}
         </div>
     );
 }

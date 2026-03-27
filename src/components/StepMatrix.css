@@ -81,6 +81,32 @@
     opacity: 0.7;
 }
 
+.step-note {
+    max-width: 700px;
+    margin-top: 0.5rem;
+}
+
+.step-link-button {
+    display: block;
+    margin-top: 1rem;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 0.75rem 1rem;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    border-radius: 8px;
+    background: rgba(59, 130, 246, 0.16);
+    color: var(--text-main);
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+}
+
+.step-link-button:hover {
+    background: rgba(59, 130, 246, 0.24);
+    border-color: rgba(59, 130, 246, 0.45);
+    transform: translateY(-1px);
+}
+
 .normalized-table td {
     font-family: 'Courier New', Courier, monospace;
     font-weight: bold;

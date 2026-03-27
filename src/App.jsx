@@ -68,6 +68,10 @@ function SingleConnector() {
 
 function App() {
   const [mode, setMode] = useState('simplified'); // 'simplified', 'normalized', 'replicates', 'tpm'
+  const goToTPMMode = () => {
+    setMode('tpm');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
 
   const steps = [
     {
@@ -138,9 +142,9 @@ function App() {
     steps.push({
       id: 9,
       title: 'CPM Normalization',
-      component: <Step8Normalization mode={mode} />,
+      component: <Step8Normalization mode={mode} onGoToTPM={goToTPMMode} />,
       connector: 'single',
-      description: 'We normalize each sample by its own library size. This brings replicates onto the same scale.'
+      description: 'We use CPM here as a first simplification because it is easier to understand, but CPM only corrects for sequencing depth and not gene length. Use the TPM button below to see the more complete normalization method.'
     });
   }
 
