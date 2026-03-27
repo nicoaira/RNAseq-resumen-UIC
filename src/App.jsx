@@ -167,30 +167,35 @@ function App() {
         <h1>Pipeline RNAseq</h1>
 
         <div className="mode-tabs">
-          <button
-            className={`mode-btn ${mode === 'simplified' ? 'active-mode' : ''}`}
-            onClick={() => setMode('simplified')}
-          >
-            Simplified (No Normalization)
-          </button>
-          <button
-            className={`mode-btn ${mode === 'normalized' ? 'active-mode' : ''}`}
-            onClick={() => setMode('normalized')}
-          >
-            Realistic (With Normalization)
-          </button>
-          <button
-            className={`mode-btn ${mode === 'replicates' ? 'active-mode' : ''}`}
-            onClick={() => setMode('replicates')}
-          >
-            With Replicates (Triplicates)
-          </button>
-          <button
-            className={`mode-btn ${mode === 'tpm' ? 'active-mode' : ''}`}
-            onClick={() => setMode('tpm')}
-          >
-            TPM Normalization Explained
-          </button>
+          <div className="mode-tabs-primary">
+            <button
+              className={`mode-btn ${mode === 'simplified' ? 'active-mode' : ''}`}
+              onClick={() => setMode('simplified')}
+            >
+              Simplified (one sample, no normalization)
+            </button>
+            <button
+              className={`mode-btn ${mode === 'normalized' ? 'active-mode' : ''}`}
+              onClick={() => setMode('normalized')}
+            >
+              With normalization
+            </button>
+            <button
+              className={`mode-btn ${mode === 'replicates' ? 'active-mode' : ''}`}
+              onClick={() => setMode('replicates')}
+            >
+              With replicates (Realistic)
+            </button>
+          </div>
+
+          <div className="mode-tabs-secondary">
+            <button
+              className={`mode-btn ${mode === 'tpm' ? 'active-mode' : ''}`}
+              onClick={() => setMode('tpm')}
+            >
+              TPM Normalization Explained
+            </button>
+          </div>
         </div>
       </header>
 
