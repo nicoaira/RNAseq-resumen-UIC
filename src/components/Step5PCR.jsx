@@ -1,29 +1,62 @@
 import React from 'react';
 import './Step5PCR.css';
 
+const ADAPTER_COLOR = '#00d2ff';
+
 const PCRTube = ({ genes, small }) => {
     return (
         <div className={`pcr-tube-item ${small ? 'small-pcr-item' : ''}`}>
             <div className={`pcr-tube ${small ? 'small-pcr-tube' : ''}`}>
                 <div className="pcr-liquid"></div>
                 <div className="pcr-genes">
-                    {genes.map((g, i) => (
-                        <div
-                            key={i}
-                            className="cdna-strand-pcr"
-                            style={{
-                                left: `${10 + Math.random() * 80}%`,
-                                top: `${25 + Math.random() * 65}%`,
-                                backgroundColor: g.color,
-                                width: g.id === 'Others' ? (small ? '4px' : '12px') : (small ? '8px' : '20px'),
-                                height: '2px',
-                                borderRadius: '1px',
-                                transform: `rotate(${Math.random() * 180}deg)`,
-                                opacity: g.id === 'Others' ? 0.3 : 0.9,
-                                boxShadow: `0 0 5px ${g.color}`
-                            }}
-                        />
-                    ))}
+                    {genes.map((g, i) => {
+                        const isOthers = g.id === 'Others';
+                        const adapterSize = small ? 2 : 4;
+                        const totalWidth = isOthers ? (small ? 4 : 12) : (small ? 8 : 20);
+                        return (
+                            <div
+                                key={i}
+                                className="cdna-strand-pcr"
+                                style={{
+                                    left: `${10 + Math.random() * 80}%`,
+                                    top: `${25 + Math.random() * 65}%`,
+                                    width: `${totalWidth}px`,
+                                    height: '2px',
+                                    borderRadius: '1px',
+                                    transform: `rotate(${Math.random() * 180}deg)`,
+                                    opacity: isOthers ? 0.3 : 0.9,
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    overflow: 'hidden',
+                                }}
+                            >
+                                {!isOthers && (
+                                    <div style={{
+                                        width: `${adapterSize}px`,
+                                        height: '2px',
+                                        backgroundColor: ADAPTER_COLOR,
+                                        flexShrink: 0,
+                                        boxShadow: `0 0 3px ${ADAPTER_COLOR}`,
+                                    }} />
+                                )}
+                                <div style={{
+                                    flex: 1,
+                                    height: '2px',
+                                    backgroundColor: g.color,
+                                    boxShadow: `0 0 5px ${g.color}`,
+                                }} />
+                                {!isOthers && (
+                                    <div style={{
+                                        width: `${adapterSize}px`,
+                                        height: '2px',
+                                        backgroundColor: ADAPTER_COLOR,
+                                        flexShrink: 0,
+                                        boxShadow: `0 0 3px ${ADAPTER_COLOR}`,
+                                    }} />
+                                )}
+                            </div>
+                        );
+                    })}
                 </div>
             </div>
             {small && <div className="tube-label">Rep {small}</div>}
@@ -41,6 +74,10 @@ const ConditionBox = ({ title, children, legend }) => {
                     <div className="pcr-legend-side">
                         <div className="pcr-legend-title">PCR Product</div>
                         <div className="pcr-legend-items">
+                            <div className="pcr-legend-row">
+                                <span className="pcr-legend-color" style={{ backgroundColor: ADAPTER_COLOR, boxShadow: `0 0 4px ${ADAPTER_COLOR}` }}></span>
+                                <span className="pcr-legend-text">Adapter</span>
+                            </div>
                             <div className="pcr-legend-row">
                                 <span className="pcr-legend-color" style={{ backgroundColor: 'rgba(160,170,185,0.7)' }}></span>
                                 <span className="pcr-legend-text">Gene Others</span>
@@ -86,6 +123,7 @@ export default function Step5PCR({ mode }) {
                     </ConditionBox>
                 </div>
                 <div className="legend-panel" style={{ marginTop: '1rem', display: 'flex', gap: '1rem' }}>
+                    <div className="legend-item"><span className="color-box" style={{ background: ADAPTER_COLOR, width: '12px', height: '12px', borderRadius: '2px', boxShadow: `0 0 4px ${ADAPTER_COLOR}` }}></span> Adapter</div>
                     <div className="legend-item"><span className="color-box" style={{ background: 'var(--gene-a)', width: '12px', height: '12px', borderRadius: '2px' }}></span> Gene A</div>
                     <div className="legend-item"><span className="color-box" style={{ background: 'var(--gene-b)', width: '12px', height: '12px', borderRadius: '2px' }}></span> Gene B</div>
                     <div className="legend-item"><span className="color-box" style={{ background: 'var(--gene-c)', width: '12px', height: '12px', borderRadius: '2px' }}></span> Gene C</div>

@@ -209,6 +209,7 @@
 .adapter-box {
     width: 16px;
     height: 16px;
-    background-color: #a855f7;
+    background-color: #00d2ff;
     border-radius: 2px;
+    box-shadow: 0 0 4px #00d2ff;
 }
