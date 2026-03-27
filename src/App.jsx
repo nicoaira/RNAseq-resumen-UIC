@@ -76,7 +76,7 @@ function App() {
   const steps = [
     {
       id: 1,
-      title: 'Cell Simulation',
+      title: 'Specimens Simulation',
       component: <Step1Simulation mode={mode} />,
       connector: mode === 'replicates' ? 'replicates' : 'dual',
       description: mode === 'replicates'
