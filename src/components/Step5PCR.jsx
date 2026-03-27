@@ -1,88 +1,53 @@
-import React, { useEffect, useState, useMemo } from 'react';
+import React from 'react';
 import './Step5PCR.css';
 
-const CdnaWithAdapters = ({ color, id, x, y, size = "normal" }) => {
+const PCRTube = ({ genes, small }) => {
     return (
-        <svg
-            className={`cdna-strand-pcr scale-${size}`}
-            width="30"
-            height="30"
-            viewBox="0 0 100 100"
-            style={{ left: `${x}%`, top: `${y}%` }}
-            title={`Gene ${id}`}
-        >
-            {/* Adapters */}
-            <rect x="0" y="45" width="10" height="10" fill="#a855f7" />
-            <rect x="90" y="45" width="10" height="10" fill="#a855f7" />
-
-            {/* cDNA Strand */}
-            <line
-                x1="10" y1="50" x2="90" y2="50"
-                stroke={color}
-                strokeWidth="6"
-                strokeLinecap="round"
-            />
-        </svg>
+        <div className={`pcr-tube-item ${small ? 'small-pcr-item' : ''}`}>
+            <div className={`pcr-tube ${small ? 'small-pcr-tube' : ''}`}>
+                <div className="pcr-liquid"></div>
+                <div className="pcr-genes">
+                    {genes.map((g, i) => (
+                        <div
+                            key={i}
+                            className="cdna-strand-pcr"
+                            style={{
+                                left: `${10 + Math.random() * 80}%`,
+                                top: `${25 + Math.random() * 65}%`,
+                                backgroundColor: g.color,
+                                width: g.id === 'Others' ? (small ? '4px' : '12px') : (small ? '8px' : '20px'),
+                                height: '2px',
+                                borderRadius: '1px',
+                                transform: `rotate(${Math.random() * 180}deg)`,
+                                opacity: g.id === 'Others' ? 0.3 : 0.9,
+                                boxShadow: `0 0 5px ${g.color}`
+                            }}
+                        />
+                    ))}
+                </div>
+            </div>
+            {small && <div className="tube-label">Rep {small}</div>}
+        </div>
     );
 };
 
-// Seeded pseudo-random for stable positions
-function seededRandom(seed) {
-    let s = seed;
-    return () => {
-        s = (s * 16807 + 0) % 2147483647;
-        return (s - 1) / 2147483646;
-    };
-}
-
-const PCRTube = ({ title, results, isAmplified }) => {
-    // Stable gene placement
-    const displayGenes = useMemo(() => {
-        const arr = [];
-        const rng = seededRandom(title.length * 42); // specific seed for each tube
-        results.forEach((r) => {
-            const originalCount = r.count / 1000;
-            // 4x when amplified, otherwise 1x
-            const num = isAmplified ? originalCount * 4 : originalCount;
-            for (let j = 0; j < num; j++) {
-                arr.push({
-                    id: r.id,
-                    color: r.color,
-                    x: 15 + rng() * 70, // 15% to 85% width
-                    y: 25 + rng() * 70, // 25% to 95% height (liquid area)
-                    key: `${r.id}-${j}`
-                });
-            }
-        });
-        return arr;
-    }, [results, isAmplified, title]);
-
+const ConditionBox = ({ title, children, legend }) => {
     return (
-        <div className="pcr-tube-container">
-            <h3>{title}</h3>
-            <div className="pcr-tube-row">
-                <div className="pcr-tube">
-                    <div className="pcr-liquid"></div>
-                    <div className="pcr-genes">
-                        {displayGenes.map((g) => (
-                            <CdnaWithAdapters key={g.key} color={g.color} id={g.id} x={g.x} y={g.y} />
-                        ))}
-                    </div>
-                </div>
-
-                {isAmplified && (
+        <div className="condition-panel">
+            <div className="condition-header">{title}</div>
+            <div className="condition-content">
+                {children}
+                {legend && (
                     <div className="pcr-legend-side">
-                        <div className="pcr-legend-title">PCR Product<br />(x1000)</div>
+                        <div className="pcr-legend-title">PCR Product</div>
                         <div className="pcr-legend-items">
-                            {results.map(r => (
-                                <div key={r.id} className="pcr-legend-row">
-                                    <span className="pcr-legend-color" style={{ backgroundColor: r.color }}></span>
-                                    <div className="pcr-legend-text">
-                                        <div>Gene {r.id}:</div>
-                                        <div>{r.count} copies</div>
-                                    </div>
-                                </div>
-                            ))}
+                            <div className="pcr-legend-row">
+                                <span className="pcr-legend-color" style={{ backgroundColor: 'rgba(160,170,185,0.7)' }}></span>
+                                <span className="pcr-legend-text">Gene Others</span>
+                            </div>
+                            <div className="pcr-legend-row"><span className="pcr-legend-color" style={{ backgroundColor: 'var(--gene-a)' }}></span><span className="pcr-legend-text">Gene A</span></div>
+                            <div className="pcr-legend-row"><span className="pcr-legend-color" style={{ backgroundColor: 'var(--gene-b)' }}></span><span className="pcr-legend-text">Gene B</span></div>
+                            <div className="pcr-legend-row"><span className="pcr-legend-color" style={{ backgroundColor: 'var(--gene-c)' }}></span><span className="pcr-legend-text">Gene C</span></div>
                         </div>
                     </div>
                 )}
@@ -91,39 +56,53 @@ const PCRTube = ({ title, results, isAmplified }) => {
     );
 };
 
-export default function Step5PCR() {
-    const [stage, setStage] = useState(0);
+export default function Step5PCR({ mode }) {
+    const isReplicates = mode === 'replicates';
 
-    useEffect(() => {
-        const t1 = setTimeout(() => setStage(1), 1500);
-        return () => clearTimeout(t1);
-    }, []);
-
-    const controlResults = [
-        { id: 'A', color: 'var(--gene-a)', count: 2000 },
-        { id: 'B', color: 'var(--gene-b)', count: 3000 },
-        { id: 'C', color: 'var(--gene-c)', count: 4000 },
+    const getPCRGenes = (a, b, c) => [
+        ...Array(a * 4).fill(0).map(() => ({ id: 'A', color: 'var(--gene-a)' })),
+        ...Array(b * 4).fill(0).map(() => ({ id: 'B', color: 'var(--gene-b)' })),
+        ...Array(c * 4).fill(0).map(() => ({ id: 'C', color: 'var(--gene-c)' })),
+        ...Array(20).fill({ id: 'Others', color: 'rgba(160,170,185,0.5)' })
     ];
 
-    const treatedResults = [
-        { id: 'A', color: 'var(--gene-a)', count: 8000 },
-        { id: 'B', color: 'var(--gene-b)', count: 3000 },
-        { id: 'C', color: 'var(--gene-c)', count: 2000 },
-    ];
+    if (isReplicates) {
+        return (
+            <div className="step-container replicates-step">
+                <div className="replicates-area">
+                    <ConditionBox title="Control Libraries">
+                        <div className="tubes-row" style={{ display: 'flex', gap: '1rem' }}>
+                            <PCRTube genes={getPCRGenes(2, 4, 4)} small="1" />
+                            <PCRTube genes={getPCRGenes(3, 3, 4)} small="2" />
+                            <PCRTube genes={getPCRGenes(2, 4, 5)} small="3" />
+                        </div>
+                    </ConditionBox>
+                    <ConditionBox title="Treated Libraries">
+                        <div className="tubes-row" style={{ display: 'flex', gap: '1rem' }}>
+                            <PCRTube genes={getPCRGenes(7, 4, 2)} small="1" />
+                            <PCRTube genes={getPCRGenes(8, 4, 2)} small="2" />
+                            <PCRTube genes={getPCRGenes(9, 4, 2)} small="3" />
+                        </div>
+                    </ConditionBox>
+                </div>
+                <div className="legend-panel" style={{ marginTop: '1rem', display: 'flex', gap: '1rem' }}>
+                    <div className="legend-item"><span className="color-box" style={{ background: 'var(--gene-a)', width: '12px', height: '12px', borderRadius: '2px' }}></span> Gene A</div>
+                    <div className="legend-item"><span className="color-box" style={{ background: 'var(--gene-b)', width: '12px', height: '12px', borderRadius: '2px' }}></span> Gene B</div>
+                    <div className="legend-item"><span className="color-box" style={{ background: 'var(--gene-c)', width: '12px', height: '12px', borderRadius: '2px' }}></span> Gene C</div>
+                </div>
+            </div>
+        );
+    }
 
     return (
         <div className="step-container">
-            <div className="pcr-status">
-                {stage === 0 ? "Preparing Library for PCR..." : "PCR Amplification Complete!"}
-            </div>
-
             <div className="pcr-area">
-                <PCRTube title="Control Library" results={controlResults} isAmplified={stage >= 1} />
-                <PCRTube title="Treated Library" results={treatedResults} isAmplified={stage >= 1} />
-            </div>
-
-            <div className="adapter-legend">
-                <div className="adapter-box"></div> = Sequencing Adapters
+                <ConditionBox title="Control Library" legend={true}>
+                    <PCRTube genes={getPCRGenes(2, 4, 4)} />
+                </ConditionBox>
+                <ConditionBox title="Treated Library" legend={true}>
+                    <PCRTube genes={getPCRGenes(8, 4, 2)} />
+                </ConditionBox>
             </div>
         </div>
     );

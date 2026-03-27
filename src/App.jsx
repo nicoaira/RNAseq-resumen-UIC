@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './App.css';
 import Step1Simulation from './components/Step1Simulation';
 import Step2Extraction from './components/Step2Extraction';
@@ -7,24 +7,24 @@ import Step3Adapters from './components/Step3Adapters';
 import Step5PCR from './components/Step5PCR';
 import Step4Sequencing from './components/Step4Sequencing';
 import Step5Alignment from './components/Step5Alignment';
-import Step6SamViewer from './components/Step6SamViewer';
 import Step7CountMatrix from './components/Step7CountMatrix';
 import Step8Normalization from './components/Step8Normalization';
 import Step9DEA from './components/Step9DEA';
 
-const steps = [
-  { id: 1, title: 'Cell Simulation', component: <Step1Simulation />, connector: 'dual', description: 'Observe the two cells. The treated cell has more copies of Gene A (red) than the control cell. Gene B (green) is unchanged, and Gene C (yellow) has fewer copies in the treated cell.' },
-  { id: 2, title: 'RNA Extraction', component: <Step2Extraction />, connector: 'dual', description: 'We burst the cell open and isolate the RNA into separate tubes.' },
-  { id: 3, title: 'Reverse Transcription', component: <Step3RT />, connector: 'dual', description: 'Reverse transcriptase enzyme converts the extracted mRNA into stable double-stranded complementary DNA (cDNA) for sequencing.' },
-  { id: 4, title: 'Addition of Adapters', component: <Step3Adapters />, connector: 'dual', description: 'Adapters are ligated to the ends of the cDNA fragments. These Illumina adapters contain regions for Flow cell binding, Indices for sample multiplexing, and Sequencing primer binding.' },
-  { id: 5, title: 'PCR Amplification', component: <Step5PCR />, connector: 'dual', description: 'PCR amplification exponentially copies the cDNA libraries to produce millions of fragments (represented here as x1000), ensuring we have enough genetic material for the sequencer.' },
-  { id: 6, title: 'Sequencing', component: <Step4Sequencing />, connector: 'dual', description: 'The sequencer reads the fragments, generating a FastQ file. Notice we have lost the gene color—reads are now just unmarked strings of text.' },
-  { id: 7, title: 'Alignment', component: <Step5Alignment />, connector: 'dual', description: 'We map the raw reads back to the reference genome to figure out which gene each read came from. Watch them regain their colors upon matching!' },
-  { id: 8, title: 'SAM Output', component: <Step6SamViewer />, connector: 'merge', description: 'The aligned reads are saved in a SAM format, restoring our knowledge of their origin.' },
-  { id: 9, title: 'Raw Count Matrix', component: <Step7CountMatrix />, connector: 'single', description: 'We sum up the reads mapping to each gene to create our raw count matrix.' },
-  { id: 10, title: 'Normalization', component: <Step8Normalization />, connector: 'single', description: 'We normalize the counts by the sequencing depth to make the samples comparable.' },
-  { id: 11, title: 'Differential Expression', component: <Step9DEA />, connector: 'none', description: 'Finally, we compute the Log2 Fold Change to see which genes went up or down significantly.' }
-];
+function ReplicateConnector() {
+  return (
+    <div className="connector-grid dual-grid">
+      <div className="connector-col">
+        <div className="vline control-line"></div>
+        <div className="varrow">▼</div>
+      </div>
+      <div className="connector-col">
+        <div className="vline treated-line"></div>
+        <div className="varrow treated-arrow">▼</div>
+      </div>
+    </div>
+  );
+}
 
 function DualConnector() {
   return (
@@ -65,11 +65,120 @@ function SingleConnector() {
 }
 
 function App() {
+  const [mode, setMode] = useState('simplified'); // 'simplified', 'normalized', 'replicates'
+
+  const steps = [
+    {
+      id: 1,
+      title: 'Cell Simulation',
+      component: <Step1Simulation mode={mode} />,
+      connector: mode === 'replicates' ? 'replicates' : 'dual',
+      description: mode === 'replicates'
+        ? 'We use biological replicates (3 control cells, 3 treated cells) to account for natural variation within the same condition.'
+        : 'Observe the two cells. The treated cell has more copies of Gene A (red) than the control cell. Gene B (green) is unchanged, and Gene C (yellow) has fewer copies in the treated cell.'
+    },
+    {
+      id: 2,
+      title: 'RNA Extraction',
+      component: <Step2Extraction mode={mode} />,
+      connector: mode === 'replicates' ? 'replicates' : 'dual',
+      description: 'We burst the cells open and isolate the RNA into separate tubes.'
+    },
+    {
+      id: 3,
+      title: 'Reverse Transcription',
+      component: <Step3RT mode={mode} />,
+      connector: mode === 'replicates' ? 'replicates' : 'dual',
+      description: 'Reverse transcriptase converts the mRNA into stable cDNA for sequencing.'
+    },
+    {
+      id: 4,
+      title: 'Addition of Adapters',
+      component: <Step3Adapters mode={mode} />,
+      connector: mode === 'replicates' ? 'replicates' : 'dual',
+      description: 'Adapters are ligated to the ends of the cDNA fragments for Illumina sequencing.'
+    },
+    {
+      id: 5,
+      title: 'PCR Amplification',
+      component: <Step5PCR mode={mode} />,
+      connector: mode === 'replicates' ? 'replicates' : 'dual',
+      description: 'PCR exponentially amplifies the library. Replicates will now have slightly different compositions due to both biological and technical noise.'
+    },
+    {
+      id: 6,
+      title: 'Sequencing',
+      component: <Step4Sequencing mode={mode} />,
+      connector: mode === 'replicates' ? 'replicates' : 'dual',
+      description: mode === 'replicates'
+        ? 'Each replicate is sequenced. Depth varies technically between flowcell lanes, adding another layer of complexity.'
+        : (mode === 'normalized' ? 'Different sequencing depths (5,010 vs 2,507 reads) are generated due to technical variation on the flowcell.' : 'Idealized sequencing at equal depth.')
+    },
+    {
+      id: 7,
+      title: 'Alignment & Mapping',
+      component: <Step5Alignment mode={mode} />,
+      connector: 'merge',
+      description: 'We map raw reads to the reference. For simplicity, we process them independently and aggregate counts.'
+    },
+    {
+      id: 8,
+      title: 'Raw Count Matrix',
+      component: <Step7CountMatrix mode={mode} />,
+      connector: 'single',
+      description: mode === 'replicates'
+        ? 'We now have a matrix with 6 columns. Notice the variability (Gene B is not exactly the same in Ctrl 1, 2, and 3!)'
+        : 'We count reads per gene for each sample.'
+    },
+  ];
+
+  if (mode !== 'simplified') {
+    steps.push({
+      id: 9,
+      title: 'CPM Normalization',
+      component: <Step8Normalization mode={mode} />,
+      connector: 'single',
+      description: 'We normalize each sample by its own library size. This brings replicates onto the same scale.'
+    });
+  }
+
+  steps.push({
+    id: 10,
+    title: 'Differential Expression',
+    component: <Step9DEA mode={mode} />,
+    connector: 'none',
+    description: mode === 'replicates'
+      ? 'Using 3 replicates per group allows us to calculate statistical significance (e.g. p-values) to ensure differences are not just random noise.'
+      : 'Finally, we compute the Log2 Fold Change to identify up- and down-regulated genes.'
+  });
+
+  steps.forEach((s, i) => s.id = i + 1);
+
   return (
     <div className="app-container">
       <header className="app-header">
         <h1>RNAseq Interactive Educational Pipeline</h1>
-        <p>Scroll down to follow the journey of RNA from the cell to differential expression analysis.</p>
+
+        <div className="mode-tabs">
+          <button
+            className={`mode-btn ${mode === 'simplified' ? 'active-mode' : ''}`}
+            onClick={() => setMode('simplified')}
+          >
+            Simplified (No Normalization)
+          </button>
+          <button
+            className={`mode-btn ${mode === 'normalized' ? 'active-mode' : ''}`}
+            onClick={() => setMode('normalized')}
+          >
+            Realistic (With Normalization)
+          </button>
+          <button
+            className={`mode-btn ${mode === 'replicates' ? 'active-mode' : ''}`}
+            onClick={() => setMode('replicates')}
+          >
+            With Replicates (Triplicates)
+          </button>
+        </div>
       </header>
 
       <main className="scroll-content">
@@ -87,7 +196,6 @@ function App() {
               </div>
             </div>
 
-            {/* Connector between steps */}
             {index < steps.length - 1 && (
               <div className="step-connector-row">
                 <div className="spacer-info"></div>
@@ -95,6 +203,7 @@ function App() {
                   {step.connector === 'dual' && <DualConnector />}
                   {step.connector === 'merge' && <MergeConnector />}
                   {step.connector === 'single' && <SingleConnector />}
+                  {step.connector === 'replicates' && <ReplicateConnector />}
                 </div>
               </div>
             )}

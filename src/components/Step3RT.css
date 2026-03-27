@@ -1,44 +1,53 @@
-.tubes-area {
-    display: flex;
-    gap: 6rem;
-    justify-content: center;
-    align-items: flex-end;
-    height: 400px;
-}
-
-.tube-container {
+.step-container {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 1rem;
+    gap: 2rem;
+    width: 100%;
 }
 
-.tube-container h3 {
-    color: var(--text-main);
-    font-size: 1.25rem;
+.tubes-area {
+    display: flex;
+    gap: 3rem;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.replicates-area {
+    display: flex;
+    gap: 3rem;
+    justify-content: center;
+    width: 100%;
+}
+
+.tubes-row {
+    display: flex;
+    gap: 1rem;
+    align-items: flex-end;
+}
+
+.tube-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
 }
 
 .tube {
     width: 100px;
     height: 250px;
-    border: 4px solid rgba(255, 255, 255, 0.4);
+    border: 3px solid rgba(255, 255, 255, 0.3);
     border-top: none;
     border-radius: 0 0 50px 50px;
     position: relative;
-    background: linear-gradient(90deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.05) 100%);
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3), inset 0 -20px 30px rgba(0, 0, 0, 0.5);
+    background: linear-gradient(90deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.1) 100%);
     overflow: hidden;
 }
 
-.tube::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -10px;
-    right: -10px;
-    height: 8px;
-    background: rgba(255, 255, 255, 0.6);
-    border-radius: 4px;
+.tube.small-tube {
+    width: 70px;
+    height: 180px;
+    border-radius: 0 0 35px 35px;
 }
 
 .tube-liquid {
@@ -47,40 +56,49 @@
     left: 0;
     width: 100%;
     height: 60%;
-    background: linear-gradient(0deg, rgba(59, 130, 246, 0.3) 0%, rgba(59, 130, 246, 0.1) 100%);
     border-radius: 0 0 46px 46px;
-    border-top: 2px solid rgba(59, 130, 246, 0.4);
+}
+
+.rt-liquid {
+    background: linear-gradient(0deg, rgba(16, 185, 129, 0.3) 0%, rgba(16, 185, 129, 0.1) 100%);
+    border-top: 1px solid rgba(16, 185, 129, 0.4);
+}
+
+.tube.small-tube .tube-liquid {
+    border-radius: 0 0 32px 32px;
+}
+
+.tube-label {
+    font-size: 0.8rem;
+    color: var(--text-muted);
 }
 
 .genes-container {
     position: absolute;
+    top: -100px;
+    left: 0;
     width: 100%;
     height: 100%;
-    top: -100%;
-    /* Start above the tube */
-    left: 0;
-    opacity: 0;
-    transition: transform 1.5s cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 0.5s;
+    transition: transform 1.5s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .genes-container.dropping {
-    top: 0;
-    opacity: 1;
+    transform: translateY(160px);
 }
 
-.cdna-strand-tube {
+.rna-strand-tube {
     position: absolute;
     transform: translate(-50%, -50%);
     filter: drop-shadow(0 0 3px currentColor);
-    animation: float 4s infinite ease-in-out alternate;
+    animation: tube-float 4s infinite ease-in-out alternate;
 }
 
-@keyframes float {
+@keyframes tube-float {
     0% {
-        transform: translate(-50%, -50%) rotate(-10deg) translateY(0);
+        transform: translate(-50%, -50%) rotate(-5deg) translateY(0);
     }
 
     100% {
-        transform: translate(-50%, -50%) rotate(10deg) translateY(-5px);
+        transform: translate(-50%, -50%) rotate(5deg) translateY(-8px);
     }
 }

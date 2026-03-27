@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import './Step2Extraction.css';
 
-const RnaStrand = ({ color, id, x, y }) => {
+const RnaStrand = ({ color, id, x, y, delay }) => {
     return (
         <svg
             className="rna-strand-tube"
             width="30"
             height="30"
             viewBox="0 0 100 100"
-            style={{ left: `${x}%`, top: `${y}%` }}
+            style={{ left: `${x}%`, top: `${y}%`, animationDelay: `${delay}s` }}
             title={`Gene ${id}`}
         >
             <path
@@ -22,11 +22,10 @@ const RnaStrand = ({ color, id, x, y }) => {
     );
 };
 
-const Tube = ({ title, genes, dropping }) => {
+const Tube = ({ genes, dropping, small }) => {
     return (
-        <div className="tube-container">
-            <h3>{title}</h3>
-            <div className="tube">
+        <div className={`tube-item ${small ? 'small-tube-item' : ''}`}>
+            <div className={`tube ${small ? 'small-tube' : ''}`}>
                 <div className="tube-liquid"></div>
                 <div className={`genes-container ${dropping ? 'dropping' : ''}`}>
                     {genes.map((g, i) => (
@@ -36,56 +35,83 @@ const Tube = ({ title, genes, dropping }) => {
                             id={g.id}
                             x={g.x}
                             y={g.y}
+                            delay={g.delay}
                         />
                     ))}
                 </div>
+            </div>
+            {small && <div className="tube-label">Rep {small}</div>}
+        </div>
+    );
+};
+
+const ConditionBox = ({ title, children, isTreated }) => {
+    return (
+        <div className={`condition-panel ${isTreated ? 'treated-panel' : 'control-panel'}`}>
+            <div className="condition-header">{title}</div>
+            <div className="condition-content">
+                {children}
             </div>
         </div>
     );
 };
 
-export default function Step2Extraction() {
+const OTHER_GENES_TUBE = [
+    { id: 'O', x: 55, y: 35, delay: 0.2 },
+    { id: 'O', x: 25, y: 70, delay: 0.5 },
+    { id: 'O', x: 75, y: 55, delay: 0.8 },
+    { id: 'O', x: 40, y: 45, delay: 1.1 },
+];
+const OTHER_COLOR = 'rgba(160, 170, 185, 0.4)';
+
+export default function Step2Extraction({ mode }) {
     const [dropping, setDropping] = useState(false);
+    const isReplicates = mode === 'replicates';
 
     useEffect(() => {
-        // Trigger the animation shortly after mount
         const timer = setTimeout(() => setDropping(true), 100);
         return () => clearTimeout(timer);
     }, []);
 
-    const controlGenes = [
-        { id: 'A', color: 'var(--gene-a)', x: 30, y: 70 },
-        { id: 'A', color: 'var(--gene-a)', x: 50, y: 85 },
-        { id: 'B', color: 'var(--gene-b)', x: 40, y: 55 },
-        { id: 'B', color: 'var(--gene-b)', x: 70, y: 80 },
-        { id: 'B', color: 'var(--gene-b)', x: 20, y: 58 },
-        { id: 'C', color: 'var(--gene-c)', x: 50, y: 60 },
-        { id: 'C', color: 'var(--gene-c)', x: 30, y: 85 },
-        { id: 'C', color: 'var(--gene-c)', x: 80, y: 55 },
-        { id: 'C', color: 'var(--gene-c)', x: 50, y: 65 },
+    const getTubeGenes = (a, b, c) => [
+        ...Array(a).fill(0).map(() => ({ id: 'A', color: 'var(--gene-a)', x: 15 + Math.random() * 70, y: 30 + Math.random() * 50, delay: Math.random() * 2 })),
+        ...Array(b).fill(0).map(() => ({ id: 'B', color: 'var(--gene-b)', x: 15 + Math.random() * 70, y: 30 + Math.random() * 50, delay: Math.random() * 2 })),
+        ...Array(c).fill(0).map(() => ({ id: 'C', color: 'var(--gene-c)', x: 15 + Math.random() * 70, y: 30 + Math.random() * 50, delay: Math.random() * 2 })),
+        ...OTHER_GENES_TUBE.map(g => ({ ...g, color: OTHER_COLOR }))
     ];
 
-    const treatedGenes = [
-        { id: 'A', color: 'var(--gene-a)', x: 20, y: 85 },
-        { id: 'A', color: 'var(--gene-a)', x: 40, y: 60 },
-        { id: 'A', color: 'var(--gene-a)', x: 60, y: 80 },
-        { id: 'A', color: 'var(--gene-a)', x: 80, y: 65 },
-        { id: 'A', color: 'var(--gene-a)', x: 50, y: 90 },
-        { id: 'A', color: 'var(--gene-a)', x: 30, y: 70 },
-        { id: 'A', color: 'var(--gene-a)', x: 45, y: 55 },
-        { id: 'A', color: 'var(--gene-a)', x: 75, y: 80 },
-        { id: 'B', color: 'var(--gene-b)', x: 60, y: 58 },
-        { id: 'B', color: 'var(--gene-b)', x: 70, y: 85 },
-        { id: 'B', color: 'var(--gene-b)', x: 20, y: 60 },
-        { id: 'C', color: 'var(--gene-c)', x: 50, y: 58 },
-        { id: 'C', color: 'var(--gene-c)', x: 40, y: 80 },
-    ];
+    if (isReplicates) {
+        return (
+            <div className="step-container replicates-step">
+                <div className="replicates-area">
+                    <ConditionBox title="Control RNA" isTreated={false}>
+                        <div className="tubes-row">
+                            <Tube genes={getTubeGenes(2, 4, 4)} dropping={dropping} small="1" />
+                            <Tube genes={getTubeGenes(3, 3, 4)} dropping={dropping} small="2" />
+                            <Tube genes={getTubeGenes(2, 4, 5)} dropping={dropping} small="3" />
+                        </div>
+                    </ConditionBox>
+                    <ConditionBox title="Treated RNA" isTreated={true}>
+                        <div className="tubes-row">
+                            <Tube genes={getTubeGenes(7, 4, 2)} dropping={dropping} small="1" />
+                            <Tube genes={getTubeGenes(8, 4, 2)} dropping={dropping} small="2" />
+                            <Tube genes={getTubeGenes(9, 4, 2)} dropping={dropping} small="3" />
+                        </div>
+                    </ConditionBox>
+                </div>
+            </div>
+        );
+    }
 
     return (
         <div className="step-container">
             <div className="tubes-area">
-                <Tube title="Control RNA" genes={controlGenes} dropping={dropping} />
-                <Tube title="Treated RNA" genes={treatedGenes} dropping={dropping} />
+                <ConditionBox title="Control RNA" isTreated={false}>
+                    <Tube genes={getTubeGenes(2, 4, 4)} dropping={dropping} />
+                </ConditionBox>
+                <ConditionBox title="Treated RNA" isTreated={true}>
+                    <Tube genes={getTubeGenes(8, 4, 2)} dropping={dropping} />
+                </ConditionBox>
             </div>
         </div>
     );

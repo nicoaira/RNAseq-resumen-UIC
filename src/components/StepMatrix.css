@@ -55,6 +55,7 @@
     text-align: left;
     padding-left: 2rem;
     font-weight: 600;
+    white-space: nowrap;
 }
 
 .gene-dot {
@@ -162,4 +163,14 @@
     background: rgba(16, 185, 129, 0.1) !important;
     border-color: rgba(16, 185, 129, 0.4) !important;
     color: #6ee7b7 !important;
+}
+
+.ellipsis-row td {
+    color: var(--text-muted);
+    opacity: 0.5;
+    text-align: center;
+    letter-spacing: 0.15em;
+    padding-top: 0.2rem !important;
+    padding-bottom: 0.2rem !important;
+    border-bottom: none;
 }
