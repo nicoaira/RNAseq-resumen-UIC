@@ -80,8 +80,8 @@ function App() {
       component: <Step1Simulation mode={mode} />,
       connector: mode === 'replicates' ? 'replicates' : 'dual',
       description: mode === 'replicates'
-        ? 'We use biological replicates (3 control cells, 3 treated cells) to account for natural variation within the same condition.'
-        : 'Observe the two cells. The treated cell has more copies of Gene A (red) than the control cell. Gene B (green) is unchanged, and Gene C (yellow) has fewer copies in the treated cell.'
+        ? 'We use biological replicates (3 control specimens, 3 treated specimens) to account for natural variation within the same condition.'
+        : 'Observe the two specimens. The treated specimen has more copies of Gene A (red) than the control specimen. Gene B (green) is unchanged, and Gene C (yellow) has fewer copies in the treated specimen.'
     },
     {
       id: 2,

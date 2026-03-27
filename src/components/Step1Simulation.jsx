@@ -127,10 +127,10 @@ export default function Step1Simulation({ mode }) {
     return (
         <div className="step-container">
             <div className="simulation-area">
-                <ConditionBox title="Control Cell">
+                <ConditionBox title="Control Specimen">
                     <Cell genes={controlGenes} isTreated={false} />
                 </ConditionBox>
-                <ConditionBox title="Treated Cell">
+                <ConditionBox title="Treated Specimen">
                     <Cell genes={treatedGenes} isTreated={true} />
                 </ConditionBox>
             </div>
