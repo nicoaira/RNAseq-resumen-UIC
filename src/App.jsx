@@ -11,6 +11,7 @@ import Step5Alignment from './components/Step5Alignment';
 import Step7CountMatrix from './components/Step7CountMatrix';
 import Step8Normalization from './components/Step8Normalization';
 import Step9DEA from './components/Step9DEA';
+import TPMNormalization from './components/TPMNormalization';
 
 function ReplicateConnector() {
   return (
@@ -66,7 +67,7 @@ function SingleConnector() {
 }
 
 function App() {
-  const [mode, setMode] = useState('simplified'); // 'simplified', 'normalized', 'replicates'
+  const [mode, setMode] = useState('simplified'); // 'simplified', 'normalized', 'replicates', 'tpm'
 
   const steps = [
     {
@@ -180,37 +181,49 @@ function App() {
           >
             With Replicates (Triplicates)
           </button>
+          <button
+            className={`mode-btn ${mode === 'tpm' ? 'active-mode' : ''}`}
+            onClick={() => setMode('tpm')}
+          >
+            TPM Normalization Explained
+          </button>
         </div>
       </header>
 
       <main className="scroll-content">
-        {steps.map((step, index) => (
-          <section key={step.id} className="pipeline-step">
-            <div className="step-content">
-              <div className="step-info">
-                <div className="step-indicator">Step {step.id}</div>
-                <h2>{step.title}</h2>
-                <p>{step.description}</p>
-              </div>
+        {mode === 'tpm' ? (
+          <section className="pipeline-step" style={{ border: 'none', background: 'transparent', boxShadow: 'none' }}>
+            <TPMNormalization />
+          </section>
+        ) : (
+          steps.map((step, index) => (
+            <section key={step.id} className="pipeline-step">
+              <div className="step-content">
+                <div className="step-info">
+                  <div className="step-indicator">Step {step.id}</div>
+                  <h2>{step.title}</h2>
+                  <p>{step.description}</p>
+                </div>
 
-              <div className="step-visualizer">
-                {step.component}
-              </div>
-            </div>
-
-            {index < steps.length - 1 && (
-              <div className="step-connector-row">
-                <div className="spacer-info"></div>
-                <div className="connector-area">
-                  {step.connector === 'dual' && <DualConnector />}
-                  {step.connector === 'merge' && <MergeConnector />}
-                  {step.connector === 'single' && <SingleConnector />}
-                  {step.connector === 'replicates' && <ReplicateConnector />}
+                <div className="step-visualizer">
+                  {step.component}
                 </div>
               </div>
-            )}
-          </section>
-        ))}
+
+              {index < steps.length - 1 && (
+                <div className="step-connector-row">
+                  <div className="spacer-info"></div>
+                  <div className="connector-area">
+                    {step.connector === 'dual' && <DualConnector />}
+                    {step.connector === 'merge' && <MergeConnector />}
+                    {step.connector === 'single' && <SingleConnector />}
+                    {step.connector === 'replicates' && <ReplicateConnector />}
+                  </div>
+                </div>
+              )}
+            </section>
+          ))
+        )}
       </main>
     </div>
   );
