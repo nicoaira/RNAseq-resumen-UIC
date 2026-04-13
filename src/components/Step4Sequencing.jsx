@@ -84,9 +84,10 @@ export default function Step4Sequencing({ mode }) {
     const currentCtrlReads = toFastq(isReplicates ? CONTROL_REPLICATES[ctrlIdx] : CONTROL_STD);
     const currentTreatedReads = toFastq(isReplicates ? TREATED_REPLICATES[treatedIdx] : (isRealistic ? TREATED_NORMALIZED : TREATED_STD));
 
-    const readsPerRep = (reads, repIdx) => reads.length * 487 + [141, 263, 89][repIdx % 3];
-    const ctrlTotal = readsPerRep(currentCtrlReads, ctrlIdx);
-    const treatedTotal = readsPerRep(currentTreatedReads, treatedIdx);
+    const CTRL_REP_TOTALS = [6234, 3891, 5487];
+    const TREATED_REP_TOTALS = [4102, 6518, 3734];
+    const ctrlTotal = isRealistic ? 5010 : isReplicates ? CTRL_REP_TOTALS[ctrlIdx] : 5010;
+    const treatedTotal = isRealistic ? 2507 : isReplicates ? TREATED_REP_TOTALS[treatedIdx] : 5014;
 
     return (
         <div className="step-container replicates-step">
