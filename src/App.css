@@ -8,28 +8,39 @@
 }
 
 .app-header {
-  padding: 2rem;
+  padding: 1.25rem 2rem;
   background-color: var(--panel-bg);
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-  text-align: center;
   position: sticky;
   top: 0;
   z-index: 50;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.header-brand {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  width: 100%;
+  max-width: 1400px;
 }
 
 .header-logo {
-  height: 120px;
-  margin-bottom: 0.75rem;
+  height: 80px;
   background-color: white;
   border-radius: 4px;
   padding: 4px;
+  flex-shrink: 0;
 }
 
 .app-header h1 {
   font-size: 2rem;
   color: var(--accent);
-  margin: 0 0 0.5rem 0;
+  margin: 0;
 }
 
 .app-header p {
@@ -43,11 +54,8 @@
   justify-content: space-between;
   align-items: center;
   gap: 4.5rem;
-  margin: 1.5rem 0;
   width: 100%;
-  max-width: 1120px;
-  margin-left: auto;
-  margin-right: auto;
+  max-width: 1400px;
 }
 
 .mode-tabs-primary,

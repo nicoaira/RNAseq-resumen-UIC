@@ -163,8 +163,10 @@ function App() {
   return (
     <div className="app-container">
       <header className="app-header">
-        <img src={uicLogo} alt="UIC logo" className="header-logo" />
-        <h1>Pipeline RNAseq</h1>
+        <div className="header-brand">
+          <img src={uicLogo} alt="UIC logo" className="header-logo" />
+          <h1>Pipeline RNAseq</h1>
+        </div>
 
         <div className="mode-tabs">
           <div className="mode-tabs-primary">
