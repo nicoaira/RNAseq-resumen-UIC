@@ -96,12 +96,12 @@ export default function Step7CountMatrix({ mode }) {
                             <tfoot>
                                 <tr>
                                     <td>Total Reads</td>
-                                    <td>5010</td>
-                                    <td>5010</td>
-                                    <td>5011</td>
-                                    <td>5013</td>
-                                    <td>5014</td>
-                                    <td>5015</td>
+                                    <td>6234</td>
+                                    <td>3891</td>
+                                    <td>5487</td>
+                                    <td>4102</td>
+                                    <td>6518</td>
+                                    <td>3734</td>
                                 </tr>
                             </tfoot>
                         </table>
