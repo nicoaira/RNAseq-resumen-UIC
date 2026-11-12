@@ -28,7 +28,7 @@ export const CHECKPOINTS = {
     },
     de: {
         question: 'With one sample per group, can we say a gene changed?',
-        answer: 'No. We can compute a fold change, but we cannot tell whether it is bigger than the natural differences between individuals. For that we need biological replicates and statistics (classes 2 and 3).',
+        answer: 'No. We can compute a fold change, but we cannot tell whether it is bigger than the natural differences between individuals. For that we need biological replicates and statistics.',
         byMode: {
             replicates: {
                 question: 'Gene B reads 4, 3, 4 in the controls and 4, 4, 4 in the treated replicates. Did it change?',

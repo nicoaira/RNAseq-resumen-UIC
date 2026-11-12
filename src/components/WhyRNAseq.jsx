@@ -99,7 +99,7 @@ function GeneTable({ state }) {
                 );
             })}
             <div className="why-footnote">
-                * Invented genes from our made-up RX-42 drug example (also used in classes 2 and 3).
+                * Invented genes from our made-up RX-42 drug example.
                 RX-42 is not a real drug. The other four genes are real.
             </div>
         </div>
