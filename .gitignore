@@ -23,3 +23,7 @@ dist-ssr
 *.sln
 *.sw?
 dist-single
+
+# Documents excluded from version control
+/src/assets/Documento.pdf
+/src/assets/d41586-026-00878-1.pdf
