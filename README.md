@@ -14,3 +14,10 @@ The React Compiler is not enabled on this template because of its impact on dev 
 ## Expanding the ESLint configuration
 
 If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+
+## Class 1 additions (branch `uciel-class1`)
+
+- Tabs **Why RNA-seq?** and **Design your experiment**, plus a **Class mode** switch that shows "Predict first" questions in the pipeline steps.
+- New pipeline step **FASTQ & Quality** between Sequencing and Alignment.
+- Open a view directly with a URL hash: `#why`, `#design`, `#simplified`, `#normalized`, `#replicates`, `#tpm`.
+- `npm run build:single` writes one self-contained offline file: `dist-single/index.html` (open it in any browser, no internet needed).

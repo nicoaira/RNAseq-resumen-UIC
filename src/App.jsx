@@ -12,6 +12,17 @@ import Step7CountMatrix from './components/Step7CountMatrix';
 import Step8Normalization from './components/Step8Normalization';
 import Step9DEA from './components/Step9DEA';
 import TPMNormalization from './components/TPMNormalization';
+import WhyRNAseq from './components/WhyRNAseq';
+import DesignExperiment from './components/DesignExperiment';
+import StepFastqQC from './components/StepFastqQC';
+import Checkpoint from './components/Checkpoint';
+import { getCheckpoint } from './data/checkpoints';
+
+const MODES = ['why', 'design', 'simplified', 'normalized', 'replicates', 'tpm'];
+const modeFromHash = () => {
+  const h = window.location.hash.replace('#', '');
+  return MODES.includes(h) ? h : 'why';
+};
 
 function ReplicateConnector() {
   return (
@@ -67,7 +78,13 @@ function SingleConnector() {
 }
 
 function App() {
-  const [mode, setMode] = useState('simplified'); // 'simplified', 'normalized', 'replicates', 'tpm'
+  const [mode, setModeState] = useState(modeFromHash); // 'why', 'design', 'simplified', 'normalized', 'replicates', 'tpm'
+  const [classMode, setClassMode] = useState(false);
+  // Keep the current tab in the URL (#why, #design, ...) so the teacher can open a view directly
+  const setMode = m => {
+    setModeState(m);
+    window.history.replaceState(null, '', `#${m}`);
+  };
   const goToTPMMode = () => {
     setMode('tpm');
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -76,6 +93,7 @@ function App() {
   const steps = [
     {
       id: 1,
+      key: 'specimens',
       title: 'Specimens Simulation',
       component: <Step1Simulation mode={mode} />,
       connector: mode === 'replicates' ? 'replicates' : 'dual',
@@ -85,6 +103,7 @@ function App() {
     },
     {
       id: 2,
+      key: 'extraction',
       title: 'RNA Extraction',
       component: <Step2Extraction mode={mode} />,
       connector: mode === 'replicates' ? 'replicates' : 'dual',
@@ -92,6 +111,7 @@ function App() {
     },
     {
       id: 3,
+      key: 'rt',
       title: 'Reverse Transcription',
       component: <Step3RT mode={mode} />,
       connector: mode === 'replicates' ? 'replicates' : 'dual',
@@ -99,6 +119,7 @@ function App() {
     },
     {
       id: 4,
+      key: 'adapters',
       title: 'Addition of Adapters',
       component: <Step3Adapters mode={mode} />,
       connector: mode === 'replicates' ? 'replicates' : 'dual',
@@ -106,6 +127,7 @@ function App() {
     },
     {
       id: 5,
+      key: 'pcr',
       title: 'PCR Amplification',
       component: <Step5PCR mode={mode} />,
       connector: mode === 'replicates' ? 'replicates' : 'dual',
@@ -113,6 +135,7 @@ function App() {
     },
     {
       id: 6,
+      key: 'sequencing',
       title: 'Sequencing',
       component: <Step4Sequencing mode={mode} />,
       connector: mode === 'replicates' ? 'replicates' : 'dual',
@@ -122,13 +145,33 @@ function App() {
     },
     {
       id: 7,
+      key: 'fastq',
+      title: 'FASTQ & Quality',
+      component: <StepFastqQC mode={mode} />,
+      connector: 'dual',
+      description: 'The sequencer writes each read as 4 lines in a FASTQ file. Every base gets a quality score: how sure the machine is about it. Click a quality character to decode it, then judge three files.'
+    },
+    {
+      id: 7,
+      key: 'alignment',
       title: 'Alignment & Mapping',
       component: <Step5Alignment mode={mode} />,
       connector: 'merge',
-      description: 'We map raw reads to the reference. For simplicity, we process them independently and aggregate counts.'
+      description: 'We map raw reads to the reference. For simplicity, we process them independently and aggregate counts.',
+      extra: (
+        <details className="step-extra-note">
+          <summary>Alignment or pseudo-alignment?</summary>
+          <p>
+            Aligners such as STAR place every read base by base on the genome, including reads that jump across exon junctions.
+            Pseudo-aligners such as Salmon only check which transcripts a read is compatible with, which is much faster.
+            Some reads fit several genes equally well (multi-mapping reads): tools either drop them or share them out by probability.
+          </p>
+        </details>
+      )
     },
     {
       id: 8,
+      key: 'counts',
       title: 'Raw Count Matrix',
       component: <Step7CountMatrix mode={mode} />,
       connector: 'single',
@@ -141,6 +184,7 @@ function App() {
   if (mode !== 'simplified') {
     steps.push({
       id: 9,
+      key: 'cpm',
       title: 'CPM Normalization',
       component: <Step8Normalization mode={mode} onGoToTPM={goToTPMMode} />,
       connector: 'single',
@@ -150,7 +194,8 @@ function App() {
 
   steps.push({
     id: 10,
-    title: 'Differential Expression',
+    key: 'de',
+      title: 'Differential Expression',
     component: <Step9DEA mode={mode} />,
     connector: 'none',
     description: mode === 'replicates'
@@ -166,6 +211,30 @@ function App() {
         <div className="header-brand">
           <img src={uicLogo} alt="UIC logo" className="header-logo" />
           <h1>Pipeline RNAseq</h1>
+          <div className="header-class-tabs">
+            <button
+              className={`mode-btn ${mode === 'why' ? 'active-mode' : ''}`}
+              onClick={() => setMode('why')}
+            >
+              Why RNA-seq?
+            </button>
+            <button
+              className={`mode-btn ${mode === 'design' ? 'active-mode' : ''}`}
+              onClick={() => setMode('design')}
+            >
+              Design your experiment
+            </button>
+            <button
+              type="button"
+              className={`class-mode-toggle ${classMode ? 'on' : ''}`}
+              onClick={() => setClassMode(!classMode)}
+              aria-pressed={classMode}
+              title="Show 'Predict first' questions for the class"
+            >
+              <span className="switch-track"><span className="switch-thumb"></span></span>
+              Class mode
+            </button>
+          </div>
         </div>
 
         <div className="mode-tabs">
@@ -202,7 +271,11 @@ function App() {
       </header>
 
       <main className="scroll-content">
-        {mode === 'tpm' ? (
+        {mode === 'why' ? (
+          <WhyRNAseq />
+        ) : mode === 'design' ? (
+          <DesignExperiment classMode={classMode} />
+        ) : mode === 'tpm' ? (
           <section className="pipeline-step" style={{ border: 'none', background: 'transparent', boxShadow: 'none' }}>
             <TPMNormalization />
           </section>
@@ -214,6 +287,14 @@ function App() {
                   <div className="step-indicator">Step {step.id}</div>
                   <h2>{step.title}</h2>
                   <p>{step.description}</p>
+                  {step.extra}
+                  {classMode && getCheckpoint(step.key, mode) && (
+                    <Checkpoint
+                      key={`${mode}-${step.key}`}
+                      question={getCheckpoint(step.key, mode).question}
+                      answer={getCheckpoint(step.key, mode).answer}
+                    />
+                  )}
                 </div>
 
                 <div className="step-visualizer">

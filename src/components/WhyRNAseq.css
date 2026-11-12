@@ -1,0 +1,216 @@
+.step-info .why-lead {
+    margin-top: 1rem;
+    color: var(--text-main);
+}
+
+.why-lead em {
+    color: #93c5fd;
+    font-style: normal;
+    font-weight: 600;
+}
+
+.why-visualizer {
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.why-state-picker {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.75rem;
+}
+
+.why-main {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 2.5rem;
+    align-items: center;
+    width: 100%;
+    background: #0f172a;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    padding: 1.75rem 2rem;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+}
+
+.why-cell-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.cell.why-cell {
+    width: 280px;
+    height: 280px;
+}
+
+.nucleus.why-nucleus {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100px;
+    height: 100px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    color: rgba(255, 255, 255, 0.55);
+}
+
+.why-cell-caption {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+}
+
+.why-genes {
+    display: flex;
+    flex-direction: column;
+    gap: 0.55rem;
+    min-width: 0;
+}
+
+.why-genes-head {
+    display: grid;
+    grid-template-columns: minmax(220px, 1fr) 1.2fr;
+    gap: 1rem;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--text-muted);
+    padding-bottom: 0.25rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.why-gene-row {
+    display: grid;
+    grid-template-columns: minmax(220px, 1fr) 1.2fr;
+    gap: 1rem;
+    align-items: center;
+    transition: opacity 0.3s ease;
+}
+
+.why-dna-box {
+    display: flex;
+    flex-direction: column;
+    gap: 0.1rem;
+    border-left: 4px solid;
+    padding: 0.3rem 0.6rem;
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 4px;
+}
+
+.why-dna-box strong {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 1.05rem;
+}
+
+.why-role {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+}
+
+.why-bar-track {
+    position: relative;
+    height: 26px;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.why-bar {
+    height: 100%;
+    border-radius: 4px;
+    transition: width 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.1);
+}
+
+.why-off-label {
+    position: absolute;
+    left: 0.6rem;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.35);
+}
+
+.why-gene-row.off .why-dna-box {
+    opacity: 0.55;
+}
+
+.why-footnote {
+    margin-top: 0.5rem;
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    line-height: 1.4;
+}
+
+.info-box.why-caption {
+    margin: 0 auto;
+    animation: fadeIn 0.4s ease-out;
+}
+
+/* Uses */
+.why-uses {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    width: 100%;
+}
+
+.why-use-card {
+    background: #0f172a;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    padding: 1.5rem;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+}
+
+.why-use-num {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: var(--accent);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+}
+
+.why-use-card h3 {
+    margin: 0;
+    font-size: 1.25rem;
+    color: var(--text-main);
+}
+
+.why-use-card p {
+    margin: 0;
+    color: var(--text-muted);
+    line-height: 1.5;
+    font-size: 1.02rem;
+}
+
+.why-cite {
+    margin-top: auto;
+    font-size: 0.82rem;
+    color: #93c5fd;
+    font-style: italic;
+}
+
+@media (max-width: 1100px) {
+    .why-main {
+        grid-template-columns: 1fr;
+        justify-items: center;
+    }
+
+    .why-genes {
+        width: 100%;
+    }
+
+    .why-uses {
+        grid-template-columns: 1fr;
+    }
+}
