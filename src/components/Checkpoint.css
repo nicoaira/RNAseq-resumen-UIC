@@ -1,0 +1,124 @@
+.checkpoint-box {
+    margin-top: 1.5rem;
+    padding: 1rem 1.25rem;
+    border: 1px dashed rgba(192, 132, 252, 0.6);
+    border-radius: 12px;
+    background: rgba(168, 85, 247, 0.08);
+}
+
+.checkpoint-label {
+    display: inline-block;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: #c084fc;
+    margin-bottom: 0.5rem;
+}
+
+.step-info .checkpoint-question,
+.checkpoint-question {
+    color: var(--text-main);
+    font-size: 1.05rem;
+    line-height: 1.5;
+    margin: 0 0 0.75rem 0;
+}
+
+.step-info .checkpoint-answer,
+.checkpoint-answer {
+    color: #e9d5ff;
+    font-size: 1rem;
+    line-height: 1.5;
+    margin: 0;
+    padding-top: 0.75rem;
+    border-top: 1px solid rgba(192, 132, 252, 0.3);
+    animation: fadeIn 0.4s ease-out;
+}
+
+.checkpoint-reveal {
+    background: rgba(168, 85, 247, 0.25);
+    border: 1px solid rgba(192, 132, 252, 0.6);
+    color: #f3e8ff;
+    padding: 0.5rem 1rem;
+    font-size: 0.95rem;
+    border-radius: 8px;
+}
+
+.checkpoint-reveal:hover:not(:disabled) {
+    background: rgba(168, 85, 247, 0.4);
+}
+
+/* Class mode switch in the header */
+.class-mode-toggle {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.6rem 1rem;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    background: rgba(0, 0, 0, 0.2);
+    color: rgba(255, 255, 255, 0.75);
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 500;
+}
+
+.class-mode-toggle:hover:not(:disabled) {
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+}
+
+.class-mode-toggle.on {
+    border-color: #c084fc;
+    color: #f3e8ff;
+    background: rgba(168, 85, 247, 0.2);
+}
+
+.switch-track {
+    position: relative;
+    width: 34px;
+    height: 18px;
+    border-radius: 9px;
+    background: rgba(255, 255, 255, 0.25);
+    transition: background 0.2s ease;
+    flex-shrink: 0;
+}
+
+.switch-thumb {
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: #fff;
+    transition: left 0.2s ease;
+}
+
+.class-mode-toggle.on .switch-track {
+    background: #a855f7;
+}
+
+.class-mode-toggle.on .switch-thumb {
+    left: 18px;
+}
+
+/* Small expandable note inside a step's info column */
+.step-extra-note {
+    margin-top: 1.25rem;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.03);
+    padding: 0.75rem 1rem;
+}
+
+.step-extra-note summary {
+    cursor: pointer;
+    color: var(--text-main);
+    font-weight: 600;
+    font-size: 1rem;
+}
+
+.step-info .step-extra-note p {
+    font-size: 0.98rem;
+    margin-top: 0.6rem;
+}
